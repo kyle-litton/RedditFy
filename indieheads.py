@@ -42,6 +42,7 @@ if token:
     sp = spotipy.Spotify(auth=token)
     sp.trace = False
 
+	#get all tracks in an album
     for x in albumLinks:
         temp = sp.album_tracks(x)
         
