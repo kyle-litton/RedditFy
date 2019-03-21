@@ -35,7 +35,7 @@ scope = 'playlist-modify-public'
 username = '99kylel'
 
 
-token = util.prompt_for_user_token(username,scope,client_id='7850a91337b94d799c0244170480c540',client_secret='6bea2170ab3f4e1daa021e4ff0f0d476',redirect_uri='http://localhost/')
+token = util.prompt_for_user_token(username,scope,client_id='client id',client_secret='secret key',redirect_uri='http://localhost/')
 
 
 if token:
@@ -49,7 +49,7 @@ if token:
 
              trackLinks.append(s['id'])
        
-    existing_tracks = sp.user_playlist_tracks(token,'75svY6VFRSQ1CCXZa6t9Bk')
+    existing_tracks = sp.user_playlist_tracks(token,'playlist id')
    
     uriList = []
     
@@ -69,7 +69,7 @@ if token:
 
     
     if uriList: 
-        results = sp.user_playlist_add_tracks(username, '75svY6VFRSQ1CCXZa6t9Bk', uriList)
+        results = sp.user_playlist_add_tracks(username, 'playlist id', uriList)
         print("New songs have been added to r/indieheads")
     else:
         print("Nothing new to add to playlist")
