@@ -13,4 +13,4 @@ This was done using a combination of the BeautifulSoup4 library, as well as Spot
 
 I plan on replicating this for other music subreddits that I use such as r/hiphopheads.
 
-I also would like to make an updated version in which there is a limit of 50 songs at a time in the playlist and removes old songs once the limit is reached, this will allow the playlist to be navigated much more easily. 
+I also would like to make an updated version in which there is a limit of 100 songs at a time in the playlist and removes old songs once the limit is reached, this will allow the playlist to be navigated much more easily. 
