@@ -35,34 +35,38 @@ if token:
 
     for data in soup.find_all('p', class_='title'):
         for a in data.find_all('a'):
-
+            
             #spotify album link
-            if 'spotify.com/album' in a.get('href'):
+            if 'spotify.com/album' in a.get('href') and ('[FRESH ALBUM]' in a.text or'[FRESH]' in a.text):
                 temp = []
                 temp = sp.album_tracks(a.get('href'))
-
-                #temporary fix, issue when non-released album posted
+                print(a.text)
+                #fix odd error where delux albums are different structs
                 try:
                     test = temp['tracks']
                 except KeyError:
+                    for s in temp['items']:
+                    
+                        if(len(trackLinks)<100):
+                            trackLinks.append(s['id'])
                     continue
            
                 for s in temp['tracks']['items']:
-                    count = 0;
-                    if(len(trackLinks)<100 and count<10):
+                    
+                    if(len(trackLinks)<100):
                         trackLinks.append(s['id'])
-                        count = count+1
+                       
 
             #spotify track link
-            elif 'spotify.com/track' in a.get('href'):
+            elif 'spotify.com/track' in a.get('href') and '[FRESH]' in a.text:
                 trackLinks.append(a.get('href'))
-
+                print(a.text)
 
             #Album without spotify link
             elif '[FRESH ALBUM]' in a.text:
                 x = a.text
                 search = sp.search(x[13:], limit = 1, offset = 0, type = 'album', market = None)
-            
+                print(a.text)
                 if search['albums']['total'] > 0:
                     for s in search['albums']['items']:
                         temp = []
@@ -76,13 +80,13 @@ if token:
            
                         for b in temp['tracks']['items']:
                             count = 0
-                            if(len(trackLinks)<100 and count<10):
+                            if(len(trackLinks)<100):
                                 trackLinks.append(b['id']) 
-                                count = count+1
+                               
                 
             #Song without spotify link
             elif '[FRESH]' in a.text:
-
+                print(a.text)
                 x = a.text
                 
                 search = sp.search(x[7:], limit = 1, offset = 0, type = 'track', market = None)
