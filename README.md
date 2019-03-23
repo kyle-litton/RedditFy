@@ -21,4 +21,4 @@ I plan on replicating this for other music subreddits.
 
 I am going to see how adding albums works. I may change it so only singles get added.
 
-By no means do I expect anything, however some people on Reddit asked me how they could support me. If you really want to you can support me, you can [HERE](paypal.me/jkl1999). I am a college student so anything is amazing, but really nothing is expected.
+By no means do I expect anything, however some people on Reddit asked me how they could support me. If you really want to you can support me, you can [HERE](https://paypal.me/jkl1999). I am a college student so anything is amazing, but really nothing is expected.
