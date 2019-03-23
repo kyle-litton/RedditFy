@@ -1,13 +1,12 @@
 # RedditFy
 Daily Updated Spotify playlist for music subreddits.
 
-# r/IndieHeads
+This was done using a combination of the BeautifulSoup4 library, as well as Spotipy library.
 
-This Python program generates a dail updated Spotify playlist.
+# r/IndieHeads
 
 You can follow the playlist [HERE](https://open.spotify.com/user/99kylel/playlist/75svY6VFRSQ1CCXZa6t9Bk?si=YngA_VoiRBKOMPNo4-Q20g).
 
-This was done using a combination of the BeautifulSoup4 library, as well as Spotipy library.
 
 # r/HipHopHeads
 
