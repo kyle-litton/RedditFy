@@ -21,3 +21,5 @@ You can follow the playlist [HERE](https://open.spotify.com/user/99kylel/playlis
 I plan on replicating this for other music subreddits.
 
 I am going to see how adding albums works. I may change it so only singles get added.
+
+By no means to I expect anything, however some people on Reddit asked me how to they could support me. If you really want to you can support me [HERE](paypal.me/jkl1999). I am a college student so anything is amazing, but really nothing is expected.
