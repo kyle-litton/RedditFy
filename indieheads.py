@@ -127,7 +127,7 @@ if token:
         
         for x in existing_tracks['items']:
 
-            if (count is not 0) and (x not in dontRemove):
+            if (count is not 0) and (x['track']['id'] not in dontRemove):
                 dTracks.append(x['track']['id'])
                 count = count - 1
        
