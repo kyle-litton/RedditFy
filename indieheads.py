@@ -20,7 +20,7 @@ scope = 'playlist-modify-public'
 username = '99kylel'
 
 
-token = util.prompt_for_user_token(username,scope,client_id='',client_secret='',redirect_uri='http://localhost/')
+token = util.prompt_for_user_token(username,scope,client_id='7850a91337b94d799c0244170480c540',client_secret='3b043a8228e443a4ba7d093024349c6b',redirect_uri='http://localhost/')
 
 
 if token:
@@ -98,9 +98,10 @@ if token:
                             trackLinks.append(s['id'])
 
     uriList = []
+    dontRemove = []
 
     #prevents adding duplicate songs
-    existing_tracks = sp.user_playlist_tracks(token,'')
+    existing_tracks = sp.user_playlist_tracks(token,'75svY6VFRSQ1CCXZa6t9Bk')
     dupCheck = []
     for x in existing_tracks['items']:
         dupCheck.append(x['track']['id'])
@@ -111,10 +112,13 @@ if token:
         t = sp.track(c).get('uri')[14:]
         if t not in dupCheck:
             uriList.append(t)
+        else:
+            dontRemove.append(t)
+
 
 
           
-    existing_tracks = sp.user_playlist_tracks(token,'')
+    existing_tracks = sp.user_playlist_tracks(token,'75svY6VFRSQ1CCXZa6t9Bk')
 
     #keeps playlist to a max 100 songs
     if((existing_tracks['total']+len(uriList))>100):
@@ -123,17 +127,17 @@ if token:
         
         for x in existing_tracks['items']:
 
-            if (count is not 0) and (x not in uriList):
+            if (count is not 0) and (x not in dontRemove):
                 dTracks.append(x['track']['id'])
                 count = count - 1
        
-        sp.user_playlist_remove_all_occurrences_of_tracks(username, '', dTracks, snapshot_id=None)
+        sp.user_playlist_remove_all_occurrences_of_tracks(username, '75svY6VFRSQ1CCXZa6t9Bk', dTracks, snapshot_id=None)
 
     
 
 
     if uriList: 
-        results = sp.user_playlist_add_tracks(username, '', uriList)
+        results = sp.user_playlist_add_tracks(username, '75svY6VFRSQ1CCXZa6t9Bk', uriList)
         print("New songs have been added to r/indieheads")
     else:
         print("Nothing new to add to playlist")
