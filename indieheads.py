@@ -79,7 +79,7 @@ if token:
                             continue
            
                         for b in temp['tracks']['items']:
-                            count = 0
+                          
                             if(len(trackLinks)<100):
                                 trackLinks.append(b['id']) 
                                
@@ -97,27 +97,10 @@ if token:
                         if(len(trackLinks)<100):
                             trackLinks.append(s['id'])
 
-          
-    existing_tracks = sp.user_playlist_tracks(token,'75svY6VFRSQ1CCXZa6t9Bk')
-
-    #keeps playlist to a max 100 songs
-    if((existing_tracks['total']+len(trackLinks))>100):
-        dTracks = []
-        
-        for x in range((existing_tracks['total']+len(trackLinks))-100):
-            try:
-
-                dtemp = existing_tracks['items'][x]
-                dTracks.append(dtemp['track']['id'])
-            except IndexError:
-                continue
-       
-        sp.user_playlist_remove_all_occurrences_of_tracks(username, '75svY6VFRSQ1CCXZa6t9Bk', dTracks, snapshot_id=None)
-
     uriList = []
 
     #prevents adding duplicate songs
-    existing_tracks = sp.user_playlist_tracks(token,'75svY6VFRSQ1CCXZa6t9Bk')
+    existing_tracks = sp.user_playlist_tracks(token,'')
     dupCheck = []
     for x in existing_tracks['items']:
         dupCheck.append(x['track']['id'])
@@ -130,9 +113,27 @@ if token:
             uriList.append(t)
 
 
+          
+    existing_tracks = sp.user_playlist_tracks(token,'')
+
+    #keeps playlist to a max 100 songs
+    if((existing_tracks['total']+len(uriList))>100):
+        dTracks = []
+        count = (existing_tracks['total']+len(trackLinks))-100
+        
+        for x in existing_tracks['items']:
+
+            if (count is not 0) and (x not in uriList):
+                dTracks.append(x['track']['id'])
+                count = count - 1
+       
+        sp.user_playlist_remove_all_occurrences_of_tracks(username, '', dTracks, snapshot_id=None)
+
+    
+
 
     if uriList: 
-        results = sp.user_playlist_add_tracks(username, '75svY6VFRSQ1CCXZa6t9Bk', uriList)
+        results = sp.user_playlist_add_tracks(username, '', uriList)
         print("New songs have been added to r/indieheads")
     else:
         print("Nothing new to add to playlist")
