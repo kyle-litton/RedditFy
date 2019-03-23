@@ -16,21 +16,6 @@ page = requests.get(url, headers=headers)
 
 soup = BeautifulSoup(page.text, 'html.parser')
 
-albumLinks = []
-trackLinks = []
-
-for data in soup.find_all('p', class_='title'):
-    for a in data.find_all('a'):
-        if 'spotify.com/album' in a.get('href'):
-            albumLinks.append(a.get('href'))
-
-
-        if 'spotify.com/track' in a.get('href'):
-            trackLinks.append(a.get('href'))
-
-
-
-
 scope = 'playlist-modify-public'
 username = '99kylel'
 
@@ -41,23 +26,74 @@ token = util.prompt_for_user_token(username,scope,client_id='',client_secret='',
 if token:
     sp = spotipy.Spotify(auth=token)
     sp.trace = False
-   
-    for x in albumLinks:
+        
 
-        temp = []
-        temp = sp.album_tracks(x)
+    albumTitles = []
+    trackTitles = []
 
-        #temporary fix, issue when non-released album posted
-        try:
-            test = temp['tracks']
-        except KeyError:
-            continue
-       
-        for s in temp['tracks']['items']:
-            if(len(trackLinks)<100):
-                trackLinks.append(s['id'])
+    trackLinks = []
 
-             
+    for data in soup.find_all('p', class_='title'):
+        for a in data.find_all('a'):
+
+            #spotify album link
+            if 'spotify.com/album' in a.get('href'):
+                temp = []
+                temp = sp.album_tracks(a.get('href'))
+
+                #temporary fix, issue when non-released album posted
+                try:
+                    test = temp['tracks']
+                except KeyError:
+                    continue
+           
+                for s in temp['tracks']['items']:
+                    count = 0;
+                    if(len(trackLinks)<100 and count<10):
+                        trackLinks.append(s['id'])
+                        count = count+1
+
+            #spotify track link
+            elif 'spotify.com/track' in a.get('href'):
+                trackLinks.append(a.get('href'))
+
+
+            #Album without spotify link
+            elif '[FRESH ALBUM]' in a.text:
+                x = a.text
+                search = sp.search(x[13:], limit = 1, offset = 0, type = 'album', market = None)
+            
+                if search['albums']['total'] > 0:
+                    for s in search['albums']['items']:
+                        temp = []
+                        temp = sp.album_tracks(s['id'])
+
+                        #temporary fix, issue when non-released album posted
+                        try:
+                            test = temp['tracks']
+                        except KeyError:
+                            continue
+           
+                        for b in temp['tracks']['items']:
+                            count = 0
+                            if(len(trackLinks)<100 and count<10):
+                                trackLinks.append(b['id']) 
+                                count = count+1
+                
+            #Song without spotify link
+            elif '[FRESH]' in a.text:
+
+                x = a.text
+                
+                search = sp.search(x[7:], limit = 1, offset = 0, type = 'track', market = None)
+            
+                if search['tracks']['total'] > 0:
+
+                    for s in search['tracks']['items']:
+                        if(len(trackLinks)<100):
+                            trackLinks.append(s['id'])
+
+          
     existing_tracks = sp.user_playlist_tracks(token,'75svY6VFRSQ1CCXZa6t9Bk')
 
     #keeps playlist to a max 100 songs
@@ -77,6 +113,7 @@ if token:
     uriList = []
 
     #prevents adding duplicate songs
+    existing_tracks = sp.user_playlist_tracks(token,'75svY6VFRSQ1CCXZa6t9Bk')
     dupCheck = []
     for x in existing_tracks['items']:
         dupCheck.append(x['track']['id'])
@@ -87,7 +124,6 @@ if token:
         t = sp.track(c).get('uri')[14:]
         if t not in dupCheck:
             uriList.append(t)
-
 
 
 
