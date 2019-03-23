@@ -20,7 +20,7 @@ scope = 'playlist-modify-public'
 username = '99kylel'
 
 
-token = util.prompt_for_user_token(username,scope,client_id='7850a91337b94d799c0244170480c540',client_secret='3b043a8228e443a4ba7d093024349c6b',redirect_uri='http://localhost/')
+token = util.prompt_for_user_token(username,scope,client_id='',client_secret='',redirect_uri='http://localhost/')
 
 
 if token:
