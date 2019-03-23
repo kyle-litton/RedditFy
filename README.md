@@ -9,8 +9,15 @@ You can follow the playlist [HERE](https://open.spotify.com/user/99kylel/playlis
 
 This was done using a combination of the BeautifulSoup4 library, as well as Spotipy library.
 
+# r/HipHopHeads
+
+
+You can follow the playlist [HERE](https://open.spotify.com/user/99kylel/playlist/6L13eWId1qkQibMJLKAcI5?si=REKHH4FuRYiaqOt4FBsbSA).
+
+
+
 # Whats Next?
 
-I plan on replicating this for other music subreddits that I use such as r/hiphopheads.
+I plan on replicating this for other music subreddits.
 
-I also would like to make an updated version in which there is a limit of 100 songs at a time in the playlist and removes old songs once the limit is reached, this will allow the playlist to be navigated much more easily. 
+I am going to see how adding albums works. I may change it so only singles get added.
