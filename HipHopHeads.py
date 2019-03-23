@@ -35,34 +35,38 @@ if token:
 
     for data in soup.find_all('p', class_='title'):
         for a in data.find_all('a'):
-
+            
             #spotify album link
-            if 'spotify.com/album' in a.get('href'):
+            if 'spotify.com/album' in a.get('href') and ('[FRESH ALBUM]' in a.text or'[FRESH]' in a.text):
                 temp = []
                 temp = sp.album_tracks(a.get('href'))
-
-                #temporary fix, issue when non-released album posted
+                print(a.text)
+                #fix odd error where delux albums are different structs
                 try:
                     test = temp['tracks']
                 except KeyError:
+                    for s in temp['items']:
+                    
+                        if(len(trackLinks)<100):
+                            trackLinks.append(s['id'])
                     continue
            
                 for s in temp['tracks']['items']:
-                    count = 0;
-                    if(len(trackLinks)<100 and count<10):
+                    
+                    if(len(trackLinks)<100):
                         trackLinks.append(s['id'])
-                        count = count+1
+                       
 
             #spotify track link
-            elif 'spotify.com/track' in a.get('href'):
+            elif 'spotify.com/track' in a.get('href') and '[FRESH]' in a.text:
                 trackLinks.append(a.get('href'))
-
+                print(a.text)
 
             #Album without spotify link
             elif '[FRESH ALBUM]' in a.text:
                 x = a.text
                 search = sp.search(x[13:], limit = 1, offset = 0, type = 'album', market = None)
-            
+                print(a.text)
                 if search['albums']['total'] > 0:
                     for s in search['albums']['items']:
                         temp = []
@@ -75,14 +79,14 @@ if token:
                             continue
            
                         for b in temp['tracks']['items']:
-                            count = 0
-                            if(len(trackLinks)<100 and count<10):
+                          
+                            if(len(trackLinks)<100):
                                 trackLinks.append(b['id']) 
-                                count = count+1
+                               
                 
             #Song without spotify link
             elif '[FRESH]' in a.text:
-
+                print(a.text)
                 x = a.text
                 
                 search = sp.search(x[7:], limit = 1, offset = 0, type = 'track', market = None)
@@ -93,27 +97,10 @@ if token:
                         if(len(trackLinks)<100):
                             trackLinks.append(s['id'])
 
-          
-    existing_tracks = sp.user_playlist_tracks(token,'6L13eWId1qkQibMJLKAcI5')
-
-    #keeps playlist to a max 100 songs
-    if((existing_tracks['total']+len(trackLinks))>100):
-        dTracks = []
-        
-        for x in range((existing_tracks['total']+len(trackLinks))-100):
-            try:
-
-                dtemp = existing_tracks['items'][x]
-                dTracks.append(dtemp['track']['id'])
-            except IndexError:
-                continue
-       
-        sp.user_playlist_remove_all_occurrences_of_tracks(username, '6L13eWId1qkQibMJLKAcI5', dTracks, snapshot_id=None)
-
     uriList = []
 
     #prevents adding duplicate songs
-    existing_tracks = sp.user_playlist_tracks(token,'6L13eWId1qkQibMJLKAcI5')
+    existing_tracks = sp.user_playlist_tracks(token,'')
     dupCheck = []
     for x in existing_tracks['items']:
         dupCheck.append(x['track']['id'])
@@ -126,9 +113,27 @@ if token:
             uriList.append(t)
 
 
+          
+    existing_tracks = sp.user_playlist_tracks(token,'')
+
+    #keeps playlist to a max 100 songs
+    if((existing_tracks['total']+len(uriList))>100):
+        dTracks = []
+        count = (existing_tracks['total']+len(trackLinks))-100
+        
+        for x in existing_tracks['items']:
+
+            if (count is not 0) and (x not in uriList):
+                dTracks.append(x['track']['id'])
+                count = count - 1
+       
+        sp.user_playlist_remove_all_occurrences_of_tracks(username, '', dTracks, snapshot_id=None)
+
+    
+
 
     if uriList: 
-        results = sp.user_playlist_add_tracks(username, '6L13eWId1qkQibMJLKAcI5', uriList)
+        results = sp.user_playlist_add_tracks(username, '', uriList)
         print("New songs have been added to r/hiphopheads")
     else:
         print("Nothing new to add to playlist")
