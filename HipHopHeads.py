@@ -98,9 +98,10 @@ if token:
                             trackLinks.append(s['id'])
 
     uriList = []
+    dontRemove = []
 
     #prevents adding duplicate songs
-    existing_tracks = sp.user_playlist_tracks(token,'')
+    existing_tracks = sp.user_playlist_tracks(token,'6L13eWId1qkQibMJLKAcI5')
     dupCheck = []
     for x in existing_tracks['items']:
         dupCheck.append(x['track']['id'])
@@ -111,10 +112,12 @@ if token:
         t = sp.track(c).get('uri')[14:]
         if t not in dupCheck:
             uriList.append(t)
+        else:
+            dontRemove.append(t)
 
 
           
-    existing_tracks = sp.user_playlist_tracks(token,'')
+    existing_tracks = sp.user_playlist_tracks(token,'6L13eWId1qkQibMJLKAcI5')
 
     #keeps playlist to a max 100 songs
     if((existing_tracks['total']+len(uriList))>100):
@@ -123,17 +126,17 @@ if token:
         
         for x in existing_tracks['items']:
 
-            if (count is not 0) and (x not in uriList):
+            if (count is not 0) and (x not in dontRemove):
                 dTracks.append(x['track']['id'])
                 count = count - 1
        
-        sp.user_playlist_remove_all_occurrences_of_tracks(username, '', dTracks, snapshot_id=None)
+        sp.user_playlist_remove_all_occurrences_of_tracks(username, '6L13eWId1qkQibMJLKAcI5', dTracks, snapshot_id=None)
 
     
 
 
     if uriList: 
-        results = sp.user_playlist_add_tracks(username, '', uriList)
+        results = sp.user_playlist_add_tracks(username, '6L13eWId1qkQibMJLKAcI5', uriList)
         print("New songs have been added to r/hiphopheads")
     else:
         print("Nothing new to add to playlist")
