@@ -2,9 +2,9 @@
 Daily Updated Spotify playlist for music subreddits.
 
 ~~This was done using a combination of the BeautifulSoup4 library, as well as Spotipy library.~~
-_This has been replaced with some cleaner code rather than scraping reddit_
+_This has been replaced with PRAW for some cleaner code rather than scraping reddit_
 
-#How to Setup
+# How to Setup
 
 - Rename 'my-login-template.ini' to 'mylogin.ini' and then fill out the config file with the appropriate info
 
