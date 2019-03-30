@@ -7,7 +7,7 @@ import spotipy.util as util
 from bs4 import BeautifulSoup
 
 
-url = "https://old.reddit.com/r/hiphopheads/top/"
+url = "https://old.reddit.com/r/indieheads/top/"
 # Headers to mimic a browser visit
 headers = {'User-Agent': 'Mozilla/5.0'}
 
