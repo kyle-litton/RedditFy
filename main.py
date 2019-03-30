@@ -1,4 +1,5 @@
-import requests
+from setup import parse_args
+from types import SimpleNamespace
 import csv
 import time
 import spotipy
@@ -6,6 +7,9 @@ import spotipy.util as util
 import configparser
 import praw
 import json
+
+#setup
+args = parse_args()
 
 #Configuration load
 config=configparser.ConfigParser()
@@ -35,7 +39,7 @@ if token:
 
     #Loop through all the subs that were defined
     for sub in url:
-        musicSub = reddit.subreddit(sub).top(limit=20,time_filter='day')
+        musicSub = reddit.subreddit(sub).top(limit=args.limit,time_filter=args.filter)
         for post in musicSub:
 
             #spotify album link
