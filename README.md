@@ -1,7 +1,12 @@
 # RedditFy
 Daily Updated Spotify playlist for music subreddits.
 
-This was done using a combination of the BeautifulSoup4 library, as well as Spotipy library.
+~~This was done using a combination of the BeautifulSoup4 library, as well as Spotipy library.~~
+_This has been replaced with PRAW for some cleaner code rather than scraping reddit_
+
+# How to Setup
+
+- Rename 'my-login-template.ini' to 'mylogin.ini' and then fill out the config file with the appropriate info
 
 # r/IndieHeads
 
@@ -17,7 +22,8 @@ You can follow the playlist [HERE](https://open.spotify.com/user/99kylel/playlis
 
 # Whats Next?
 
-I plan on replicating this for other music subreddits.
+~~I plan on replicating this for other music subreddits.~~
+_This has been handled with an array of subreddits and keywords. No need for separate python scripts._
 
 I am going to see how adding albums works. I may change it so only singles get added.
 
